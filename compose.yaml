@@ -1,0 +1,48 @@
+services:
+   mm:
+      image: mattermost/mattermost-team-edition:latest
+      container_name: mattermost_app
+      environment:
+         DB_HOST: db
+         DB_PORT: 5432
+         MM_USERNAME: ${MM_DB_USER}
+         MM_PASSWORD: ${MM_DB_PASSWORD}
+         MM_DBNAME: ${MM_DB_NAME}
+         MM_SQLSETTINGS_DRIVERNAME: postgres
+         MM_SQLSETTINGS_DATASOURCE: postgres://${MM_DB_USER}:${MM_DB_PASSWORD}@db:5432/${MM_DB_NAME}?sslmode=disable&connect_timeout=10
+         MM_FILESETTINGS_DRIVERNAME: local
+         MM_SERVICESETTINGS_SITEURL: https://${MM_DOMAIN}
+         LETSENCRYPT_HOST: ${MM_DOMAIN}
+         VIRTUAL_HOST: ${MM_DOMAIN}
+         VIRTUAL_PORT: 8065
+      volumes:
+         - mm_volume:/mattermost
+      depends_on:
+         - db
+      restart: unless-stopped
+      networks:
+         - app
+         - main-nginx-proxy
+
+   db:
+      image: postgres:16
+      container_name: mattermost_db
+      environment:
+         POSTGRES_DB: ${MM_DB_NAME}
+         POSTGRES_USER: ${MM_DB_USER}
+         POSTGRES_PASSWORD: ${MM_DB_PASSWORD}
+      volumes:
+         - db_volume:/var/lib/postgresql/data
+      restart: unless-stopped
+      networks:
+         - app
+
+volumes:
+   mm_volume:
+   db_volume:
+
+networks:
+   app:
+      external: false
+   main-nginx-proxy:
+      external: true
