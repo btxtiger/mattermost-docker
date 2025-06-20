@@ -12,3 +12,4 @@
 # Environment configuration
 .env
 
+compose.yaml
