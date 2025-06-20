@@ -17,6 +17,8 @@ services:
          VIRTUAL_PORT: 8065
       volumes:
          - mm_volume:/mattermost
+#      ports:
+#         - "3000:8065"
       depends_on:
          - db
       restart: unless-stopped
