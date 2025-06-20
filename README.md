@@ -1,11 +1,32 @@
 # Mattermost Docker
 
-This project provides a minimal setup to run [Mattermost](https://mattermost.com/) using Docker Compose.
+A minimal Docker Compose setup to run [Mattermost](https://mattermost.com/).
 
-## Usage
+## Getting Started
 
-1. Clone this repository.
-2. Copy the example environment file: `cp .env.example .env`
-3. Edit `.env` to set your desired configuration (e.g., database password, Mattermost site URL).
-4. Run `docker compose up -d` to start the services.
-5. Access Mattermost at `http://localhost:8065`.
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-org/mattermost-docker.git
+   cd mattermost-docker
+   ```
+
+2. Copy the example files:
+   ```bash
+   cp .env.example .env
+   cp docker-compose.example.yml docker-compose.yml
+   ```
+
+3. Configure your environment:
+   Edit the `.env` file to set values such as the database password and site URL.
+
+4. Start the services:
+   ```bash
+   docker compose up -d
+   ```
+
+5. Open Mattermost in your browser:
+   [http://localhost:8065](http://localhost:8065)
+
+---
+
+For advanced configurations or production setup, refer to the [official Mattermost documentation](https://docs.mattermost.com/).
